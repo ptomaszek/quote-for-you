@@ -1,0 +1,32 @@
+body {
+    text-align: center;
+    margin-left: 5%;
+    margin-right: 5%;
+    overflow: hidden;
+}
+
+div {
+    height:33%;
+    width: 100%;
+    text-align: center;
+    margin: 0 0 0 0 ;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0 0 0 0;
+}
+
+#quote {
+    color: #578ba1;
+    padding-top: 3%;
+    font-size: 25px;
+}
+
+#author {
+    padding-top: 1%;
+    color: #49778b;
+    opacity: 0.8;
+    text-shadow: 0 0 50px #c99225;
+}
