@@ -4,7 +4,24 @@ $(document).ready(function () {
     }, {
         start: fetchQuote
     });
+
+    //bind modals
+    $('#settingsLink').click(function () {
+        $('#settingsModal')
+            .modal({
+                fadeDuration: 150,
+                fadeDelay: 0.50
+            })
+            .on($.modal.CLOSE, function () {
+                saveOptions();
+            })
+            .on($.modal.OPEN, function () {
+                loadOptions();
+            });
+        return false;
+    });
 });
+
 
 function showQuote(quote) {
     $('#quote').hide().text(quote.quoteText).fadeIn('fast');

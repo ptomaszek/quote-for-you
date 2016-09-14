@@ -6,10 +6,10 @@ log = function (value) {
         }
     }
 
-    chrome.storage.local.get(LOGGING_ENABLED_KEY, function (options) {
-        // if (options[LOGGING_ENABLED_KEY]) {
+    chrome.storage.sync.get(LOGGING_ENABLED_KEY, function (options) {
+        if (options[LOGGING_ENABLED_KEY]) {
             logIt();
-        // }
+        }
     });
 };
 

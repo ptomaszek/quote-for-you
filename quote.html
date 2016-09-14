@@ -3,6 +3,7 @@
 <head>
     <meta charset=UTF-8>
     <link rel=stylesheet href=assets/css/quote.css>
+    <link rel=stylesheet href=assets/css/jquery.modal.min.css>
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -12,10 +13,19 @@
 
     <!--<button id="lastQuotes">Last quotes</button>-->
     <!--<button id="clearLast">Clear last quotes</button>-->
+
+    <p><a id="settingsLink">Settings</a></p>
+    <div id="settingsModal" style="display:none;">
+        <label for="logSetting">
+            <span>Print debug info to <i>console</i></span><input type="checkbox" id="logSetting"/>
+        </label>
+    </div>
 </div>
 
 <script src="assets/ext_libs/jquery-3.1.0.min.js"></script>
 <script src=assets/ext_libs/jquery-ui.1.12.0.min.js></script>
+<script src=assets/ext_libs/jquery.modal-0.8.0.min.js></script>
+<script src=assets/js/options.js></script>
 <script src=assets/js/logger.js></script>
 <script src=assets/js/FixedQueue.js></script>
 <script src=assets/js/quote.js></script>
