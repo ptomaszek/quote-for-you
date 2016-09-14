@@ -6,9 +6,47 @@ $(document).ready(function () {
     });
 });
 
-function populateWithQuote(quote) {
-    $('#quote').text(quote.quoteText);
-    $('#author').text(quote.quoteAuthor);
+function showQuote(quote) {
+    $('#quote').hide().text(quote.quoteText).fadeIn('fast');
+    $('#author').hide().text(quote.quoteAuthor).fadeIn();
+}
+
+function storeQuote(newQuote) {
+    chrome.storage.sync.get(
+        'lastQuotes'
+        , function (data) {
+            var lastQuotes = data.lastQuotes;
+            if (typeof lastQuotes === "undefined") {
+                lastQuotes = FixedQueue(3, []);
+            } else {
+                lastQuotes = FixedQueue(3, lastQuotes);
+            }
+
+            log('lastQuotes before save:');
+            log(lastQuotes);
+            log('new quote to be stored before save:');
+            log(newQuote);
+
+            var lastQuotesLinks = lastQuotes.map(function (quote) {// links are like IDs
+                return quote.quoteLink;
+            });
+
+            if ($.inArray(newQuote.quoteLink, lastQuotesLinks) !== -1) {
+                log('quote already in store');
+                return;
+            }
+
+            lastQuotes.unshift(newQuote);
+
+            chrome.storage.sync.set({
+                'lastQuotes': lastQuotes
+            }, function () {
+                log('new quote has been saved');
+            });
+
+        }
+    );
+
 }
 
 function populateWithBackupQuote() {
@@ -18,24 +56,29 @@ function populateWithBackupQuote() {
         quoteText: 'Cold is cold',
         quoteAuthor: "and that's bold"
     };
-    populateWithQuote(quote)
+    showQuote(quote)
 }
 
 var fetchQuote = function () {
     //todo language options
     var uri = 'http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json';
     uri = 'test.json'; //todo remove
-    uri = 'invalid.json'; //todo remove
+    // uri = 'invalid.json'; //todo remove
 
     $.get(uri,
         function (quote) {
-            quote = quote.replace("\\'", "'");
-            populateWithQuote($.parseJSON(quote));
+            quote = $.parseJSON(quote.replace(/\\'/g, "'"));
+            showQuote(quote);
+            storeQuote(quote);
         },
-        'text'
-    )
+        'text')
         .fail(function (d, textStatus, error) {
-            console.error("getJSON failed, status: " + textStatus + ", error: " + error)
+            error("get() failed, status: " + textStatus + ", error: " + error)
+            error(d);
             populateWithBackupQuote();
         });
 };
+
+$('#clearLast').click(function () {
+    chrome.storage.sync.set({'lastQuotes': undefined});
+});
