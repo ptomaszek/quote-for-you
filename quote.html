@@ -11,14 +11,21 @@
     <p id="quote"></p>
     <p id="author"></p>
 
-    <!--<button id="lastQuotes">Last quotes</button>-->
-    <!--<button id="clearLast">Clear last quotes</button>-->
 
-    <p><a id="settingsLink">Settings</a></p>
-    <div id="settingsModal" style="display:none;">
-        <label for="logSetting">
-            <span>Print debug info to <i>console</i></span><input type="checkbox" id="logSetting"/>
-        </label>
+    <div id="bottomLinksContainer">
+        <!--<p><a id="favouritesLink">Saved favourites</a></p>-->
+        <!--<div id="favouritesModal" style="display:none;"></div>-->
+        <!--<button id="clearFavourites">Clear favourites quotes</button>-->
+
+        <p><a id="lastQuotesLink">Last 3 quotes</a></p>
+        <div id="lastQuotesModal" style="display:none;"></div>
+
+        <p><a id="settingsLink">Settings</a></p>
+        <div id="settingsModal" style="display:none;">
+            <label for="logSetting">
+                <span>Print debug info to <i>console</i></span><input type="checkbox" id="logSetting"/>
+            </label>
+        </div>
     </div>
 </div>
 

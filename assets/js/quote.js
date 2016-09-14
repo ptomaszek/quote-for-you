@@ -9,19 +9,46 @@ $(document).ready(function () {
     $('#settingsLink').click(function () {
         $('#settingsModal')
             .modal({
+                showClose: false,
                 fadeDuration: 150,
                 fadeDelay: 0.50
             })
-            .on($.modal.CLOSE, function () {
-                saveOptions();
-            })
             .on($.modal.OPEN, function () {
                 loadOptions();
+            })
+            .on($.modal.CLOSE, function () {
+                saveOptions();
+            });
+        return false;
+    });
+
+    //bind modals
+    $('#lastQuotesLink').click(function () {
+        $('#lastQuotesModal')
+            .modal({
+                fadeDuration: 150,
+                fadeDelay: 0.50
+            })
+            .on($.modal.OPEN, function () {
+                reloadlastQuotes();
             });
         return false;
     });
 });
 
+
+function reloadlastQuotes() {
+    chrome.storage.sync.get(LAST_QUOTES_KEY, function (data) {
+        var lastQuotes = data.lastQuotes;
+
+        $('#lastQuotesModal').empty();
+        $(lastQuotes).each(function (index, quote) {
+            $('#lastQuotesModal')
+                .append($('<p class="favouriteQuoteText"></p>').text(quote.quoteText))
+                .append($('<p class="favouriteQuoteAuthor"></p>').text(quote.quoteAuthor))
+        });
+    });
+}
 
 function showQuote(quote) {
     $('#quote').hide().text(quote.quoteText).fadeIn('fast');
@@ -30,9 +57,9 @@ function showQuote(quote) {
 
 function storeQuote(newQuote) {
     chrome.storage.sync.get(
-        'lastQuotes'
+        LAST_QUOTES_KEY
         , function (data) {
-            var lastQuotes = data.lastQuotes;
+            var lastQuotes = data[LAST_QUOTES_KEY];
             if (typeof lastQuotes === "undefined") {
                 lastQuotes = FixedQueue(3, []);
             } else {
@@ -55,9 +82,9 @@ function storeQuote(newQuote) {
 
             lastQuotes.unshift(newQuote);
 
-            chrome.storage.sync.set({
-                'lastQuotes': lastQuotes
-            }, function () {
+            var storage = {};
+            storage[LAST_QUOTES_KEY] = lastQuotes;
+            chrome.storage.sync.set(storage, function () {
                 log('new quote has been saved');
             });
 
@@ -96,6 +123,8 @@ var fetchQuote = function () {
         });
 };
 
-$('#clearLast').click(function () {
-    chrome.storage.sync.set({'lastQuotes': undefined});
+$('#clearFavouritesQuotes').click(function () {
+    var storage = {};
+    storage[FAVOURITES_QUOTES_KEY] = undefined;
+    chrome.storage.sync.set(storage);
 });

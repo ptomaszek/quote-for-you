@@ -5,13 +5,6 @@ body {
     overflow: hidden;
 }
 
-div {
-    height:33%;
-    width: 100%;
-    text-align: center;
-    margin: 0 0 0 0 ;
-}
-
 p {
     margin-top: 0;
     margin-bottom: 0;
@@ -29,4 +22,34 @@ p {
     color: #49778b;
     opacity: 0.8;
     text-shadow: 0 0 50px #c99225;
+}
+
+
+/*modal*/
+
+body > .modal {
+    display: none;
+}
+
+.favouriteQuoteText {
+    color: #578ba1;
+    padding-top: 3%;
+    font-size: 15px;
+}
+
+.favouriteQuoteAuthor {
+    padding-top: 1%;
+    color: #49778b;
+    opacity: 0.8;
+    text-shadow: 0 0 50px #c99225;
+    font-size: 10px;
+}
+
+
+#bottomLinksContainer {
+    color: #49778b;
+    position: fixed;
+    text-align: left;
+    bottom: 10px;
+    right: 10px;
 }
