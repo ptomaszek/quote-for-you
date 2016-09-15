@@ -1,3 +1,5 @@
+var CURRENT_QUOTE;
+
 $(document).ready(function () {
     $("html body").animate({
         backgroundColor: "#F7F7F7"
@@ -5,7 +7,80 @@ $(document).ready(function () {
         start: fetchQuote
     });
 
-    //bind modals
+    bindAddToFavouritesLink();
+    bindFavouritesLink();
+    bindLastQuotesLink();
+    bindSettingsLink();
+});
+
+function bindAddToFavouritesLink() {
+    $('#addToFavourites').click(function () {
+        chrome.storage.sync.get(
+            FAVOURITE_QUOTES_KEY
+            , function (data) {
+                var favouriteQuotes = data[FAVOURITE_QUOTES_KEY];
+                if (typeof favouriteQuotes === "undefined") {
+                    favouriteQuotes = FixedQueue(10, []);
+                } else {
+                    favouriteQuotes = FixedQueue(10, favouriteQuotes);
+                }
+
+                log('favouriteQuotes before save:');
+                log(favouriteQuotes);
+                log('quote to be added to favourites:');
+                log(CURRENT_QUOTE);
+
+                var favouriteQuotesLinks = favouriteQuotes.map(function (quote) {// links are like IDs
+                    return quote.quoteLink;
+                });
+
+                if ($.inArray(CURRENT_QUOTE.quoteLink, favouriteQuotesLinks) !== -1) {
+                    log('quote already in favourites');
+                    return;
+                }
+
+                favouriteQuotes.unshift(CURRENT_QUOTE);
+
+                var storage = {};
+                storage[FAVOURITE_QUOTES_KEY] = favouriteQuotes;
+                chrome.storage.sync.set(storage, function () {
+                    log('new quote has been saved');
+                });
+
+            }
+        );
+    });
+}
+
+function bindFavouritesLink() {
+    $('#favouritesLink').click(function () {
+        $('#favouritesModal')
+            .modal({
+                fadeDuration: 150,
+                fadeDelay: 0.50
+            })
+            .on($.modal.OPEN, function () {
+                reloadFavourites();
+            });
+        return false;
+    });
+}
+
+function bindLastQuotesLink() {
+    $('#lastQuotesLink').click(function () {
+        $('#lastQuotesModal')
+            .modal({
+                fadeDuration: 150,
+                fadeDelay: 0.50
+            })
+            .on($.modal.OPEN, function () {
+                reloadLastQuotes();
+            });
+        return false;
+    });
+}
+
+function bindSettingsLink() {
     $('#settingsLink').click(function () {
         $('#settingsModal')
             .modal({
@@ -21,25 +96,25 @@ $(document).ready(function () {
             });
         return false;
     });
+}
 
-    //bind modals
-    $('#lastQuotesLink').click(function () {
-        $('#lastQuotesModal')
-            .modal({
-                fadeDuration: 150,
-                fadeDelay: 0.50
-            })
-            .on($.modal.OPEN, function () {
-                reloadlastQuotes();
-            });
-        return false;
+
+function reloadFavourites() {
+    chrome.storage.sync.get(FAVOURITE_QUOTES_KEY, function (data) {
+        var favourites = data[FAVOURITE_QUOTES_KEY];
+
+        $('#favouritesModal').empty();
+        $(favourites).each(function (index, quote) {
+            $('#favouritesModal')
+                .append($('<p class="favouriteQuoteText"></p>').text(quote.quoteText))
+                .append($('<p class="favouriteQuoteAuthor"></p>').text(quote.quoteAuthor))
+        });
     });
-});
+}
 
-
-function reloadlastQuotes() {
+function reloadLastQuotes() {
     chrome.storage.sync.get(LAST_QUOTES_KEY, function (data) {
-        var lastQuotes = data.lastQuotes;
+        var lastQuotes = data[LAST_QUOTES_KEY];
 
         $('#lastQuotesModal').empty();
         $(lastQuotes).each(function (index, quote) {
@@ -51,6 +126,7 @@ function reloadlastQuotes() {
 }
 
 function showQuote(quote) {
+    CURRENT_QUOTE = quote;
     $('#quote').hide().text(quote.quoteText).fadeIn('fast');
     $('#author').hide().text(quote.quoteAuthor).fadeIn();
 }
@@ -107,7 +183,7 @@ var fetchQuote = function () {
     //todo language options
     var uri = 'http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json';
     uri = 'test.json'; //todo remove
-    // uri = 'invalid.json'; //todo remove
+    uri = 'invalid.json'; //todo remove
 
     $.get(uri,
         function (quote) {
@@ -116,8 +192,8 @@ var fetchQuote = function () {
             storeQuote(quote);
         },
         'text')
-        .fail(function (d, textStatus, error) {
-            error("get() failed, status: " + textStatus + ", error: " + error)
+        .fail(function (d, textStatus, err) {
+            error("get() failed, status: " + textStatus + ", error: " + err)
             error(d);
             populateWithBackupQuote();
         });
@@ -125,6 +201,6 @@ var fetchQuote = function () {
 
 $('#clearFavouritesQuotes').click(function () {
     var storage = {};
-    storage[FAVOURITES_QUOTES_KEY] = undefined;
+    storage[FAVOURITE_QUOTES_KEY] = undefined;
     chrome.storage.sync.set(storage);
 });

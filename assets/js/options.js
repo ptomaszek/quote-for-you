@@ -23,4 +23,4 @@ function saveOptions() {
 
 //storage keys (not options)
 var LAST_QUOTES_KEY = 'lastQuotes';
-var FAVOURITES_QUOTES_KEY = 'favouritesQuotes';
+var FAVOURITE_QUOTES_KEY = 'favouritesQuotes';
