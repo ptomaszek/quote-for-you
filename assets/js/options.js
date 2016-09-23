@@ -24,3 +24,10 @@ function saveOptions() {
 //storage keys (not options)
 var LAST_QUOTES_KEY = 'lastQuotes';
 var FAVOURITE_QUOTES_KEY = 'favouritesQuotes';
+
+
+$('#clearFavouritesQuotes').click(function () {
+    var storage = {};
+    storage[FAVOURITE_QUOTES_KEY] = undefined;
+    chrome.storage.sync.set(storage);
+});

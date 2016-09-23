@@ -6,127 +6,12 @@ $(document).ready(function () {
     }, {
         start: fetchQuote
     });
-
-    bindAddToFavouritesLink();
-    bindFavouritesLink();
-    bindLastQuotesLink();
-    bindSettingsLink();
 });
-
-function bindAddToFavouritesLink() {
-    $('#addToFavourites').click(function () {
-        chrome.storage.sync.get(
-            FAVOURITE_QUOTES_KEY
-            , function (data) {
-                var favouriteQuotes = data[FAVOURITE_QUOTES_KEY];
-                if (typeof favouriteQuotes === "undefined") {
-                    favouriteQuotes = FixedQueue(10, []);
-                } else {
-                    favouriteQuotes = FixedQueue(10, favouriteQuotes);
-                }
-
-                log('favouriteQuotes before save:');
-                log(favouriteQuotes);
-                log('quote to be added to favourites:');
-                log(CURRENT_QUOTE);
-
-                var favouriteQuotesLinks = favouriteQuotes.map(function (quote) {// links are like IDs
-                    return quote.quoteLink;
-                });
-
-                if ($.inArray(CURRENT_QUOTE.quoteLink, favouriteQuotesLinks) !== -1) {
-                    log('quote already in favourites');
-                    return;
-                }
-
-                favouriteQuotes.unshift(CURRENT_QUOTE);
-
-                var storage = {};
-                storage[FAVOURITE_QUOTES_KEY] = favouriteQuotes;
-                chrome.storage.sync.set(storage, function () {
-                    log('new quote has been saved');
-                });
-
-            }
-        );
-    });
-}
-
-function bindFavouritesLink() {
-    $('#favouritesLink').click(function () {
-        $('#favouritesModal')
-            .modal({
-                fadeDuration: 150,
-                fadeDelay: 0.50
-            })
-            .on($.modal.OPEN, function () {
-                reloadFavourites();
-            });
-        return false;
-    });
-}
-
-function bindLastQuotesLink() {
-    $('#lastQuotesLink').click(function () {
-        $('#lastQuotesModal')
-            .modal({
-                fadeDuration: 150,
-                fadeDelay: 0.50
-            })
-            .on($.modal.OPEN, function () {
-                reloadLastQuotes();
-            });
-        return false;
-    });
-}
-
-function bindSettingsLink() {
-    $('#settingsLink').click(function () {
-        $('#settingsModal')
-            .modal({
-                showClose: false,
-                fadeDuration: 150,
-                fadeDelay: 0.50
-            })
-            .on($.modal.OPEN, function () {
-                loadOptions();
-            })
-            .on($.modal.CLOSE, function () {
-                saveOptions();
-            });
-        return false;
-    });
-}
-
-
-function reloadFavourites() {
-    chrome.storage.sync.get(FAVOURITE_QUOTES_KEY, function (data) {
-        var favourites = data[FAVOURITE_QUOTES_KEY];
-
-        $('#favouritesModal').empty();
-        $(favourites).each(function (index, quote) {
-            $('#favouritesModal')
-                .append($('<p class="favouriteQuoteText"></p>').text(quote.quoteText))
-                .append($('<p class="favouriteQuoteAuthor"></p>').text(quote.quoteAuthor))
-        });
-    });
-}
-
-function reloadLastQuotes() {
-    chrome.storage.sync.get(LAST_QUOTES_KEY, function (data) {
-        var lastQuotes = data[LAST_QUOTES_KEY];
-
-        $('#lastQuotesModal').empty();
-        $(lastQuotes).each(function (index, quote) {
-            $('#lastQuotesModal')
-                .append($('<p class="favouriteQuoteText"></p>').text(quote.quoteText))
-                .append($('<p class="favouriteQuoteAuthor"></p>').text(quote.quoteAuthor))
-        });
-    });
-}
 
 function showQuote(quote) {
     CURRENT_QUOTE = quote;
+    storeQuote(quote);
+
     $('#quote').hide().text(quote.quoteText).fadeIn('fast');
     $('#author').hide().text(quote.quoteAuthor).fadeIn();
 }
@@ -156,7 +41,7 @@ function storeQuote(newQuote) {
                 return;
             }
 
-            lastQuotes.unshift(newQuote);
+            lastQuotes.push(newQuote);
 
             var storage = {};
             storage[LAST_QUOTES_KEY] = lastQuotes;
@@ -166,17 +51,16 @@ function storeQuote(newQuote) {
 
         }
     );
-
 }
 
-function populateWithBackupQuote() {
+function backupQuote() {
     //todo fetch from local store
     //todo check not shown recently
-    var quote = {
-        quoteText: 'Cold is cold',
-        quoteAuthor: "and that's bold"
+    return {
+        quoteText: 'If there\'s no Internet, there are no quotes and no cats. So just relax.',
+        quoteAuthor: "Anonymous",
+        quoteLink: 'backupQuote'
     };
-    showQuote(quote)
 }
 
 var fetchQuote = function () {
@@ -189,18 +73,11 @@ var fetchQuote = function () {
         function (quote) {
             quote = $.parseJSON(quote.replace(/\\'/g, "'"));
             showQuote(quote);
-            storeQuote(quote);
         },
         'text')
         .fail(function (d, textStatus, err) {
             error("get() failed, status: " + textStatus + ", error: " + err)
             error(d);
-            populateWithBackupQuote();
+            showQuote(backupQuote());
         });
 };
-
-$('#clearFavouritesQuotes').click(function () {
-    var storage = {};
-    storage[FAVOURITE_QUOTES_KEY] = undefined;
-    chrome.storage.sync.set(storage);
-});
