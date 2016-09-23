@@ -27,7 +27,7 @@ function storeQuote(newQuote) {
                 lastQuotes = FixedQueue(3, lastQuotes);
             }
 
-            log('lastQuotes before save:');
+            log('latest quotes before save:');
             log(lastQuotes);
             log('new quote to be stored before save:');
             log(newQuote);
@@ -53,13 +53,13 @@ function storeQuote(newQuote) {
     );
 }
 
-function backupQuote() {
+function getBackupQuote() {
     //todo fetch from local store
     //todo check not shown recently
     return {
         quoteText: 'If there\'s no Internet, there are no quotes and no cats. So just relax.',
         quoteAuthor: "Anonymous",
-        quoteLink: 'backupQuote'
+        quoteLink: 'getBackupQuote'
     };
 }
 
@@ -78,6 +78,6 @@ var fetchQuote = function () {
         .fail(function (d, textStatus, err) {
             error("get() failed, status: " + textStatus + ", error: " + err)
             error(d);
-            showQuote(backupQuote());
+            showQuote(getBackupQuote());
         });
 };

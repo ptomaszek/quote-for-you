@@ -1,7 +1,7 @@
 $(document).ready(function () {
     bindAddToFavouritesLink();
     bindFavouritesLink();
-    bindLastQuotesLink();
+    bindLatestLink();
     bindSettingsLink();
 });
 
@@ -58,15 +58,15 @@ function bindFavouritesLink() {
     });
 }
 
-function bindLastQuotesLink() {
-    $('#lastQuotesLink').click(function () {
-        $('#lastQuotesModal')
+function bindLatestLink() {
+    $('#latestLink').click(function () {
+        $('#latestModal')
             .modal({
                 fadeDuration: 150,
                 fadeDelay: 0.50
             })
             .on($.modal.OPEN, function () {
-                reloadLastQuotes();
+                reloadLatest();
             });
         return false;
     });
@@ -97,22 +97,27 @@ function reloadFavourites() {
 
         $('#favouritesModal').empty();
         $(favourites).each(function (index, quote) {
-            $('#favouritesModal')
-                .append($('<p class="favouriteQuoteText"></p>').text(quote.quoteText))
-                .append($('<p class="favouriteQuoteAuthor"></p>').text(quote.quoteAuthor))
+            $('#favouritesModal').append(buildModalQuoteRow(quote));
         });
     });
 }
 
-function reloadLastQuotes() {
+function reloadLatest() {
     chrome.storage.sync.get(LAST_QUOTES_KEY, function (data) {
         var lastQuotes = data[LAST_QUOTES_KEY];
 
-        $('#lastQuotesModal').empty();
+        $('#latestModal').empty();
         $(lastQuotes).each(function (index, quote) {
-            $('#lastQuotesModal')
-                .append($('<p class="favouriteQuoteText"></p>').text(quote.quoteText))
-                .append($('<p class="favouriteQuoteAuthor"></p>').text(quote.quoteAuthor))
+            $('#latestModal').append(buildModalQuoteRow(quote));
         });
     });
+}
+
+function buildModalQuoteRow(quote) {
+    return $('<div class="modalQuote"></div>')
+        .attr("id", quote.quoteLink)
+        .append($('<p class="modalQuoteText"></p>').text(quote.quoteText))
+        .append($('<p class="modalQuoteAuthor"></p>').text(quote.quoteAuthor))
+        .append($('<p class="modalQuoteDate"></p>').text(quote.addedDate)
+        );
 }

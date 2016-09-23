@@ -1,3 +1,9 @@
+
+//storage keys (not options)
+var LAST_QUOTES_KEY = 'latestQuotes';
+var FAVOURITE_QUOTES_KEY = 'favouritesQuotes';
+
+
 // values are overridden by WebExtensions storage settings
 var DEFAULT_OPTIONS = {};
 
@@ -21,9 +27,6 @@ function saveOptions() {
     chrome.storage.sync.set(options);
 }
 
-//storage keys (not options)
-var LAST_QUOTES_KEY = 'lastQuotes';
-var FAVOURITE_QUOTES_KEY = 'favouritesQuotes';
 
 
 $('#clearFavouritesQuotes').click(function () {
