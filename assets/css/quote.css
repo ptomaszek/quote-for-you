@@ -31,8 +31,8 @@ body > .modal {
     display: none;
 }
 
-.modalQuote {
-    border-bottom: solid #578ba1;
+.modalQuoteRow {
+    border-bottom: 1px solid #578ba1;
 }
 
 .modalQuoteText {

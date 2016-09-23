@@ -95,9 +95,10 @@ function reloadFavourites() {
     chrome.storage.sync.get(FAVOURITE_QUOTES_KEY, function (data) {
         var favourites = data[FAVOURITE_QUOTES_KEY];
 
-        $('#favouritesModal').empty();
+        var $favouritesContent = $('#favouritesModal div[content]');
+        $favouritesContent.empty();
         $(favourites).each(function (index, quote) {
-            $('#favouritesModal').append(buildModalQuoteRow(quote));
+            $favouritesContent.append(buildModalQuoteRow(quote));
         });
     });
 }
@@ -106,18 +107,25 @@ function reloadLatest() {
     chrome.storage.sync.get(LAST_QUOTES_KEY, function (data) {
         var lastQuotes = data[LAST_QUOTES_KEY];
 
-        $('#latestModal').empty();
+        var $latestContent = $('#latestModal div[content]');
+        $latestContent.empty();
         $(lastQuotes).each(function (index, quote) {
-            $('#latestModal').append(buildModalQuoteRow(quote));
+            $latestContent.append(buildModalQuoteRow(quote));
         });
     });
 }
 
 function buildModalQuoteRow(quote) {
-    return $('<div class="modalQuote"></div>')
+    return $('<div class="modalQuoteRow"></div>')
         .attr("id", quote.quoteLink)
         .append($('<p class="modalQuoteText"></p>').text(quote.quoteText))
         .append($('<p class="modalQuoteAuthor"></p>').text(quote.quoteAuthor))
-        .append($('<p class="modalQuoteDate"></p>').text(quote.addedDate)
-        );
+        .append($('<p class="modalQuoteDate"></p>').text(quote.quoteDate));
 }
+
+$('#clearFavourites').click(function () {
+    var storage = {};
+    storage[FAVOURITE_QUOTES_KEY] = FixedQueue(10, []);
+    chrome.storage.sync.set(storage);
+    reloadFavourites();
+});

@@ -9,6 +9,7 @@ $(document).ready(function () {
 });
 
 function showQuote(quote) {
+    quote.quoteDate = $.datepicker.formatDate('dd MM yy', new Date());
     CURRENT_QUOTE = quote;
     storeQuote(quote);
 
