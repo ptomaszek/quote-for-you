@@ -1,15 +1,36 @@
 var CURRENT_QUOTE;
 
 $(document).ready(function () {
-    $("html body").animate({
-        backgroundColor: "#F7F7F7"
-    }, {
-        start: fetchQuote
+    initStorage(function () {
+        $("html body").animate({
+            backgroundColor: "#F7F7F7"
+        }, {
+            start: loadQuote
+        });
     });
 });
 
-function showQuote(quote) {
-    quote.quoteDate = $.datepicker.formatDate('dd MM yy', new Date());
+function loadQuote() {
+    performForOption(FRESH_QUOTE_FREQUENCY_KEY, function (option) {
+        switch (option) {
+            case 'everyTab':
+                fetchNewQuote();
+                break;
+            case 'everyDay':
+                fetchTodaysQuote();
+                break;
+            default:
+                throw 'none option set!';
+        }
+    });
+}
+
+function todayString() {
+    return $.datepicker.formatDate('dd MM yy', new Date());
+}
+
+function displayQuote(quote) {
+    quote.quoteDate = todayString();
     CURRENT_QUOTE = quote;
     storeQuote(quote);
 
@@ -18,15 +39,8 @@ function showQuote(quote) {
 }
 
 function storeQuote(newQuote) {
-    chrome.storage.sync.get(
-        LAST_QUOTES_KEY
-        , function (data) {
-            var lastQuotes = data[LAST_QUOTES_KEY];
-            if (typeof lastQuotes === "undefined") {
-                lastQuotes = FixedQueue(3, []);
-            } else {
-                lastQuotes = FixedQueue(3, lastQuotes);
-            }
+    performForOption(LAST_QUOTES_KEY, function (lastQuotesStored) {
+            var lastQuotes = FixedQueue(3, lastQuotesStored);
 
             log('latest quotes before save:');
             log(lastQuotes);
@@ -49,7 +63,6 @@ function storeQuote(newQuote) {
             chrome.storage.sync.set(storage, function () {
                 log('new quote has been saved');
             });
-
         }
     );
 }
@@ -64,21 +77,33 @@ function getBackupQuote() {
     };
 }
 
-var fetchQuote = function () {
+var fetchTodaysQuote = function () {
+    performForOption(LAST_QUOTES_KEY, function (lastQuotes) {
+        var lastQuote = lastQuotes[lastQuotes.length - 1];
+
+        if (typeof lastQuote !== 'undefined' && todayString() === lastQuote.quoteDate) {
+            displayQuote(lastQuote);
+        } else {
+            fetchNewQuote();
+        }
+    });
+};
+
+var fetchNewQuote = function () {
     //todo language options
     var uri = 'http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json';
     uri = 'test.json'; //todo remove
-    uri = 'invalid.json'; //todo remove
+    // uri = 'invalid.json'; //todo remove
 
     $.get(uri,
         function (quote) {
             quote = $.parseJSON(quote.replace(/\\'/g, "'"));
-            showQuote(quote);
+            displayQuote(quote);
         },
         'text')
         .fail(function (d, textStatus, err) {
             error("get() failed, status: " + textStatus + ", error: " + err)
             error(d);
-            showQuote(getBackupQuote());
+            displayQuote(getBackupQuote());
         });
 };

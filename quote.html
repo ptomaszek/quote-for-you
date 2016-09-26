@@ -13,7 +13,7 @@
     <p id="author"></p>
 
 
-    <div id="bottomLinksContainer">
+    <div id="topLinksContainer" class="linksContainer">
         <p><a id="favouritesLink">Saved favourites</a></p>
         <div id="favouritesModal" style="display:none;">
             <div content></div>
@@ -24,13 +24,24 @@
         <div id="latestModal" style="display:none;">
             <div content></div>
         </div>
-
+    </div>
+    <div id="bottomLinksContainer" class="linksContainer">
         <p><a id="settingsLink">Settings</a></p>
         <div id="settingsModal" style="display:none;">
+            <label for="frequencySetting">
+                <span>Show new quote frequency</span>
+                <select id="frequencySetting">
+                    <option value="everyDay">daily</option>
+                    <option value="everyTab">with every new tab opened</option>
+                </select>
+            </label>
+            <br>
             <label for="logSetting">
                 <span>Print debug info to <i>console</i></span><input type="checkbox" id="logSetting"/>
             </label>
         </div>
+        <br><br>
+        <p><a id="clearAllDevLink">[DEV's clear all]</a></p>
     </div>
 </div>
 

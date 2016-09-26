@@ -51,11 +51,17 @@ body > .modal {
     font-size: 8px;
 }
 
-
-#bottomLinksContainer {
+.linksContainer{
     color: #49778b;
     position: fixed;
     text-align: left;
-    bottom: 10px;
     right: 10px;
+}
+
+#topLinksContainer {
+    top: 10px;
+}
+
+#bottomLinksContainer {
+    bottom: 10px;
 }

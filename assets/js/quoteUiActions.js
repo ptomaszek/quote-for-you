@@ -7,22 +7,15 @@ $(document).ready(function () {
 
 function bindAddToFavouritesLink() {
     $('#addToFavourites').click(function () {
-        chrome.storage.sync.get(
-            FAVOURITE_QUOTES_KEY
-            , function (data) {
-                var favouriteQuotes = data[FAVOURITE_QUOTES_KEY];
-                if (typeof favouriteQuotes === "undefined") {
-                    favouriteQuotes = FixedQueue(10, []);
-                } else {
-                    favouriteQuotes = FixedQueue(10, favouriteQuotes);
-                }
+        performForOption(FAVOURITE_QUOTES_KEY, function (favouritesStored) {
+                var favourites = FixedQueue(10, favouritesStored);
 
-                log('favouriteQuotes before save:');
-                log(favouriteQuotes);
+                log('favourites before save:');
+                log(favourites);
                 log('quote to be added to favourites:');
                 log(CURRENT_QUOTE);
 
-                var favouriteQuotesLinks = favouriteQuotes.map(function (quote) {// links are like IDs
+                var favouriteQuotesLinks = favourites.map(function (quote) {// links are like IDs
                     return quote.quoteLink;
                 });
 
@@ -31,14 +24,13 @@ function bindAddToFavouritesLink() {
                     return;
                 }
 
-                favouriteQuotes.push(CURRENT_QUOTE);
+                favourites.push(CURRENT_QUOTE);
 
                 var storage = {};
-                storage[FAVOURITE_QUOTES_KEY] = favouriteQuotes;
+                storage[FAVOURITE_QUOTES_KEY] = favourites;
                 chrome.storage.sync.set(storage, function () {
                     log('new quote has been saved');
                 });
-
             }
         );
     });
@@ -128,4 +120,9 @@ $('#clearFavourites').click(function () {
     storage[FAVOURITE_QUOTES_KEY] = FixedQueue(10, []);
     chrome.storage.sync.set(storage);
     reloadFavourites();
+});
+
+//todo remove or move to settings as 'Clear all the settings, last quotes, favourites and so on'
+$('#clearAllDevLink').click(function () {
+    chrome.storage.sync.clear();
 });
