@@ -1,15 +1,18 @@
 var CURRENT_QUOTE;
 
 $(document).ready(function () {
-    initStorage(function () {
-        $("html body").animate({
-            backgroundColor: "#F7F7F7"
-        }, {
-            start: loadQuote
-        });
-    });
+    initStorage(loadScreen);
 });
 
+function loadScreen() {
+    bindLinksAndModals();
+    $("html body").animate({
+        backgroundColor: "#F7F7F7"
+    }, {
+        start: loadQuote
+    });
+
+}
 function loadQuote() {
     performForOption(FRESH_QUOTE_FREQUENCY_KEY, function (option) {
         switch (option) {
@@ -42,9 +45,7 @@ function storeQuote(newQuote) {
     performForOption(LAST_QUOTES_KEY, function (lastQuotesStored) {
             var lastQuotes = FixedQueue(3, lastQuotesStored);
 
-            log('latest quotes before save:');
-            log(lastQuotes);
-            log('new quote to be stored before save:');
+            log('new quote to be stored:');
             log(newQuote);
 
             var lastQuotesLinks = lastQuotes.map(function (quote) {// links are like IDs
@@ -78,6 +79,8 @@ function getBackupQuote() {
 }
 
 var fetchTodaysQuote = function () {
+    log('fetching today\'s quote...')
+
     performForOption(LAST_QUOTES_KEY, function (lastQuotes) {
         var lastQuote = lastQuotes[lastQuotes.length - 1];
 
@@ -92,9 +95,10 @@ var fetchTodaysQuote = function () {
 var fetchNewQuote = function () {
     //todo language options
     var uri = 'http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json';
-    uri = 'test.json'; //todo remove
-    // uri = 'invalid.json'; //todo remove
+    uri = 'dev_tmp/test.json'; //todo remove
+    // uri = 'dev_tmp/invalid.json'; //todo remove
 
+    log('fetching new quote...')
     $.get(uri,
         function (quote) {
             quote = $.parseJSON(quote.replace(/\\'/g, "'"));

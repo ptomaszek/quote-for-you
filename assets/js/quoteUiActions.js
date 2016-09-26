@@ -1,39 +1,60 @@
-$(document).ready(function () {
+function bindLinksAndModals() {
     bindAddToFavouritesLink();
     bindFavouritesLink();
     bindLatestLink();
     bindSettingsLink();
-});
+}
 
+function addQuoteToFavourites(quote) {
+    performForOption(FAVOURITE_QUOTES_KEY, function (favouritesStored) {
+            var favourites = FixedQueue(10, favouritesStored);
+
+            log('quote to be added to favourites:');
+            log(quote);
+
+            var favouriteQuotesLinks = favourites.map(function (quote) {// links are like IDs
+                return quote.quoteLink;
+            });
+
+            if ($.inArray(quote.quoteLink, favouriteQuotesLinks) !== -1) {
+                log('quote already in favourites');
+                return;
+            }
+
+            favourites.push(quote);
+
+            var storage = {};
+            storage[FAVOURITE_QUOTES_KEY] = favourites;
+            chrome.storage.sync.set(storage, function () {
+                log('new quote has been saved');
+            });
+        }
+    );
+}
 function bindAddToFavouritesLink() {
     $('#addToFavourites').click(function () {
-        performForOption(FAVOURITE_QUOTES_KEY, function (favouritesStored) {
-                var favourites = FixedQueue(10, favouritesStored);
-
-                log('favourites before save:');
-                log(favourites);
-                log('quote to be added to favourites:');
-                log(CURRENT_QUOTE);
-
-                var favouriteQuotesLinks = favourites.map(function (quote) {// links are like IDs
-                    return quote.quoteLink;
-                });
-
-                if ($.inArray(CURRENT_QUOTE.quoteLink, favouriteQuotesLinks) !== -1) {
-                    log('quote already in favourites');
-                    return;
-                }
-
-                favourites.push(CURRENT_QUOTE);
-
-                var storage = {};
-                storage[FAVOURITE_QUOTES_KEY] = favourites;
-                chrome.storage.sync.set(storage, function () {
-                    log('new quote has been saved');
-                });
-            }
-        );
+        addQuoteToFavourites(CURRENT_QUOTE);
     });
+}
+
+
+function bindAddToFavouritesChosenLink() {
+    $('.addToFavouritesChosen').click(function () {
+        var chosenQuoteId = $(this).parent().attr('id');
+
+        performForOption(LAST_QUOTES_KEY, function (lastQuotes) {
+            var chosenQuote = lookup(lastQuotes, 'quoteLink', chosenQuoteId);
+            addQuoteToFavourites(chosenQuote);
+        })
+    });
+}
+
+function lookup(array, prop, value) {
+    for (var i = 0, len = array.length; i < len; i++) {
+        if (array[i] && array[i][prop] === value) {
+            return array[i];
+        }
+    }
 }
 
 function bindFavouritesLink() {
@@ -102,8 +123,13 @@ function reloadLatest() {
         var $latestContent = $('#latestModal div[content]');
         $latestContent.empty();
         $(lastQuotes).each(function (index, quote) {
-            $latestContent.append(buildModalQuoteRow(quote));
+            $latestContent.append(
+                buildModalQuoteRow(quote)
+                    .append($(' <a href="#" class="addToFavouritesChosen">Add to favourites TODO</a>'))
+            );
         });
+
+        bindAddToFavouritesChosenLink();
     });
 }
 
