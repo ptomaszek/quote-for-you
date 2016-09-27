@@ -6,13 +6,36 @@ $(document).ready(function () {
 
 function loadScreen() {
     bindLinksAndModals();
+
     $("html body").animate({
         backgroundColor: "#F7F7F7"
     }, {
-        start: loadQuote
+        start: function () {
+            loadBackground();
+            loadQuote();
+        }
     });
 
 }
+
+function loadBackground() {
+    log('fetching background image...');
+
+    var uri = 'http://pipsum.com/1280x720.jpg';
+    uri = 'dev_tmp/2560x1600.jpg'; //todo remove
+    // uri = 'dev_tmp/640x480.jpg'; //todo remove
+
+    $("<img>")
+        .attr("src", uri)
+        .on('load', function () {
+            $("#backgroundImg")
+                .hide()
+                .attr("src", $(this).attr("src"))
+                .fadeIn('fast');
+        });
+
+}
+
 function loadQuote() {
     performForOption(FRESH_QUOTE_FREQUENCY_KEY, function (option) {
         switch (option) {

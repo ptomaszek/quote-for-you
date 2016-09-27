@@ -7,7 +7,9 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<div>
+<img id="backgroundImg" class="bcImage">
+</img>
+<div id="content">
     <a href="#" id="addToFavourites">Add to favourites</a>
     <p id="quote"></p>
     <p id="author"></p>
@@ -16,7 +18,8 @@
     <div id="topLinksContainer" class="linksContainer">
         <p><a id="favouritesLink">Saved favourites</a></p>
         <div id="favouritesModal" style="display:none;">
-            <div content></div><br>
+            <div content></div>
+            <br>
             <a href="#" id="clearFavourites">Clear favourites quotes</a>
         </div>
 
@@ -29,10 +32,10 @@
         <p><a id="settingsLink">Settings</a></p>
         <div id="settingsModal" style="display:none;">
             <label for="frequencySetting">
-                <span>Show new quote frequency</span>
+                <span>How often show a new quote?</span>
                 <select id="frequencySetting">
-                    <option value="everyDay">daily</option>
-                    <option value="everyTab">with every new tab opened</option>
+                    <option value="everyDay">one per day</option>
+                    <option value="everyTab">with new tab opened</option>
                 </select>
             </label>
             <br>
