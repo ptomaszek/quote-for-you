@@ -2,19 +2,25 @@
 <html lang=en-us>
 <head>
     <meta charset=UTF-8>
-    <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i&effect=splintered" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i&effect=putting-green" rel="stylesheet">
     <link rel=stylesheet href=assets/css/quote.css>
     <link rel=stylesheet href=assets/css/jquery.modal.min.css>
 
 </head>
 <body>
-<img id="backgroundImg" class="bcImage">
+
+<div id="lay">
+</div>
+<img id="backgroundImg">
 </img>
+
 <div id="content">
     <a href="#" id="addToFavourites">Add to favourites</a>
-    <p id="quote" class="font-effect-splintered"></p>
-    <p id="author" class="font-effect-splintered"></p>
 
+    <div id="quoteArea">
+        <p id="quote" class="font-effect-putting-green"></p>
+        <p id="author" class="font-effect-putting-green"></p>
+    </div>
 
     <div id="topLinksContainer" class="linksContainer">
         <p><a id="favouritesLink">Saved favourites</a></p>
@@ -49,7 +55,7 @@
     </div>
 </div>
 
-<script src="assets/ext_libs/jquery-3.1.0.min.js"></script>
+<script src=assets/ext_libs/jquery-3.1.0.min.js></script>
 <script src=assets/ext_libs/jquery-ui.1.12.0.min.js></script>
 <script src=assets/ext_libs/jquery.modal-0.8.0.min.js></script>
 <script src=assets/js/options.js></script>

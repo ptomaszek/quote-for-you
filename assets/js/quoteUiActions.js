@@ -152,3 +152,9 @@ $('#clearFavourites').click(function () {
 $('#clearAllDevLink').click(function () {
     chrome.storage.sync.clear();
 });
+
+$("#quoteArea").hover(function() {
+    $('#lay').fadeTo(200, 0.7);
+}, function() {
+    $('#lay').fadeTo(200, 0);
+});
