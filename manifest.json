@@ -14,7 +14,6 @@
   },
   "permissions": [
     "storage", "http://api.forismatic.com/api/1.0/*"
-    //TODO change  all_urls to forismatic only
   ],
 
   "chrome_url_overrides": {

@@ -20,16 +20,21 @@ p {
 }
 
 #quote {
-    color: #578ba1;
+    color: white;
     padding-top: 3%;
-    font-size: 25px;
+    font-size: 40px;
+    font-family: 'Crimson Text', serif;
+    font-style: oblique;
+    text-shadow: 1px 1px black;
+
 }
 
 #author {
     padding-top: 1%;
-    color: #49778b;
-    opacity: 0.8;
-    text-shadow: 0 0 50px #c99225;
+    color: white;
+    font-size: 20px;
+    font-family: 'Crimson Text', serif;
+    text-shadow: 1px 1px black;
 }
 
 /*modal*/

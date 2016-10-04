@@ -31,7 +31,7 @@ function loadBackground() {
             $("#backgroundImg")
                 .hide()
                 .attr("src", $(this).attr("src"))
-                .fadeIn('fast');
+                .fadeIn('slow');
         });
 
 }
