@@ -37,13 +37,13 @@ p {
 }
 
 #quote {
-    color: white;
+    color: #FCFCF4;
     font-size: 32px;
     font-style: oblique;
 }
 
 #author {
-    color:#FAF0E6	;
+    color: #FAF0E6;
     float: right;
     font-size: 20px;
 }
