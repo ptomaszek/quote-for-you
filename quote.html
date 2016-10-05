@@ -2,7 +2,7 @@
 <html lang=en-us>
 <head>
     <meta charset=UTF-8>
-    <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i&effect=putting-green" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ledger|Crimson+Text:400,400i&effect=putting-green" rel="stylesheet">
     <link rel=stylesheet href=assets/css/quote.css>
     <link rel=stylesheet href=assets/css/jquery.modal.min.css>
 
@@ -11,31 +11,31 @@
 
 <div id="lay">
 </div>
+
+<div id="layMenu">
+</div>
 <img id="backgroundImg">
 </img>
 
 <div id="content">
-    <a href="#" id="addToFavourites">Add to favourites</a>
-
     <div id="quoteArea">
         <p id="quote"></p>
         <p id="author" class="font-effect-putting-green"></p>
     </div>
 
     <div id="topLinksContainer" class="linksContainer">
-        <p><a id="favouritesLink">Saved favourites</a></p>
-        <div id="favouritesModal" style="display:none;">
-            <div content></div>
-            <br>
-            <a href="#" id="clearFavourites">Clear favourites quotes</a>
-        </div>
-
-        <p><a id="latestLink">Last 3 quotes</a></p>
-        <div id="latestModal" style="display:none;">
-            <div content></div>
-        </div>
+        <p><a id="addToFavourites">Add to My Favourites</a></p>
     </div>
     <div id="bottomLinksContainer" class="linksContainer">
+        <div id="favouritesModal" style="display:none;">
+            <div content></div>
+            <a href="#" id="clearFavourites">Clear favourites quotes</a>
+        </div>
+        <p><a id="favouritesLink">My Favourites</a></p>
+        <div id="latestModal" style="display:none;">
+            <div content></div>
+        </div><br>
+        <p><a id="latestLink">Last 3 quotes</a></p>
         <p><a id="settingsLink">Settings</a></p>
         <div id="settingsModal" style="display:none;">
             <label for="frequencySetting">
@@ -49,9 +49,9 @@
             <label for="logSetting">
                 <span>Print debug info to <i>console</i></span><input type="checkbox" id="logSetting"/>
             </label>
+            <p><br/><a id="resetToDefaults">TODO Reset to defaults</a></p>
         </div>
-        <br><br>
-        <p><a id="clearAllDevLink">[DEV's clear all]</a></p>
+        <p><br/><a id="clearAllDevLink">[DEV's Clear storage entirely ]</a></p>
     </div>
 </div>
 

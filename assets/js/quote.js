@@ -8,7 +8,6 @@ function loadScreen() {
     bindLinksAndModals();
 
     $("html body").animate({
-        backgroundColor: "#F7F7F7"
     }, {
         start: function () {
             loadBackground();

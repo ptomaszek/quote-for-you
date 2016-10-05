@@ -5,3 +5,5 @@ TODO:
  - allow user to see last 10 quotes
  - About link - popup referencing forismatic.com
  - background images as an option
+ - image of " in the background of the quote
+ - fonts locally

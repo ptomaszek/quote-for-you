@@ -1,4 +1,6 @@
 function bindLinksAndModals() {
+    $('.linksContainer').delay(1000).animate({ opacity: 1 });
+
     bindAddToFavouritesLink();
     bindFavouritesLink();
     bindLatestLink();
@@ -157,4 +159,18 @@ $("#quoteArea").hover(function() {
     $('#lay').stop().fadeTo(200, 0.7);
 }, function() {
     $('#lay').stop().fadeTo(500, 0);
+});
+
+$("#layMenu").hover(function() {
+    $(this).stop().fadeTo(200, 0.7);
+}, function() {
+     $(this).stop().fadeTo(500, 0);
+ });
+
+$(".linksContainer").hover(function() {
+    $(this).stop().fadeTo(200, 1);
+    $('#layMenu').stop().fadeTo(200, 0.7);
+}, function() {
+    $(this).stop().fadeTo(500, .9);
+    $('#layMenu').stop().fadeTo(500, 0);
 });
