@@ -154,7 +154,7 @@ $('#clearAllDevLink').click(function () {
 });
 
 $("#quoteArea").hover(function() {
-    $('#lay').fadeTo(200, 0.7);
+    $('#lay').stop().fadeTo(200, 0.7);
 }, function() {
-    $('#lay').fadeTo(200, 0);
+    $('#lay').stop().fadeTo(500, 0);
 });
