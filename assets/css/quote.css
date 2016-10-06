@@ -33,14 +33,13 @@ p {
     position: relative;
     padding: 3%;
     max-width: 80vh;
-    text-shadow: 0 0 1px black;
-    font-family: 'Crimson Text', serif;
+    text-shadow: 1px 1px 2px black;
+    font-family: 'Tillana', cursive; /*or 'Neucha'*/
 }
 
 #quote {
     color: #FCFCF4;
     font-size: 32px;
-    font-style: oblique;
 }
 
 #author {
@@ -88,9 +87,8 @@ body > .modal {
     object-fit: cover;
 
     background: black;
-    background: -webkit-linear-gradient(left, rgba(0, 0, 0, .1) 5%, rgba(0, 0, 0, 1) 10%); /*Chrome - Safari 5.1-6*/
+    background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, .8) 1%); /*Chrome - Safari 5.1-6*/
     background: linear-gradient(left, rgba(1, 0, 0, .4) 5%, rgba(255, 255, 255, 1)); /*Standard*/
-
 }
 
 html {

@@ -21,7 +21,7 @@ function loadBackground() {
     log('fetching background image...');
 
     var uri = 'http://pipsum.com/1280x720.jpg';
-    uri = 'dev_tmp/2560x1600.jpg'; //todo remove
+//    uri = 'dev_tmp/2560x1600.jpg'; //todo remove
     // uri = 'dev_tmp/640x480.jpg'; //todo remove
 
     $("<img>")
@@ -117,7 +117,7 @@ var fetchTodaysQuote = function () {
 var fetchNewQuote = function () {
     //todo language options
     var uri = 'http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json';
-    uri = 'dev_tmp/test.json'; //todo remove
+//    uri = 'dev_tmp/test.json'; //todo remove
     // uri = 'dev_tmp/invalid.json'; //todo remove
 
     log('fetching new quote...')

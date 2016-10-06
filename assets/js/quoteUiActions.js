@@ -165,7 +165,7 @@ $("#layMenu").hover(function() {
     $(this).stop().fadeTo(200, 0.8);
     $('.linksContainer').stop().animate({ opacity: 1 });
 }, function() {
-     $(this).stop().fadeTo(500, 0);
+     $(this).stop().fadeTo(400, 0);
     $('.linksContainer').stop().animate({ opacity: .7 });
  });
 
@@ -174,5 +174,5 @@ $(".linksContainer").hover(function() {
     $('#layMenu').stop().fadeTo(200, .8);
 }, function() {
     $(this).stop().animate({ opacity: .8 });
-    $('#layMenu').stop().fadeTo(500, 0);
+    $('#layMenu').stop().fadeTo(400, 0);
 });
