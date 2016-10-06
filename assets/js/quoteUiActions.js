@@ -4,6 +4,8 @@ var LINKS_SHOWN_OPACITY = 1;
 var HOVER_ON_SPEED = 150;
 var HOVER_OFF_SPEED = 300;
 
+var MAX_OF_FAVOURITES_QUOTES = 15;
+
 function bindLinksAndModals() {
     $('#lay').animate({ opacity: BLACK_LAY_OPACITY });
     $('.linksContainer').delay(1000).animate({ opacity: LINKS_HALF_HIDDEN_OPACITY });
@@ -16,7 +18,7 @@ function bindLinksAndModals() {
 
 function addQuoteToFavourites(quote) {
     performForOption(FAVOURITE_QUOTES_KEY, function (favouritesStored) {
-            var favourites = FixedQueue(10, favouritesStored);
+            var favourites = FixedQueue(MAX_OF_FAVOURITES_QUOTES, favouritesStored);
 
             log('quote to be added to favourites:');
             log(quote);
@@ -152,7 +154,7 @@ function buildModalQuoteRow(quote) {
 
 $('#clearFavourites').click(function () {
     var storage = {};
-    storage[FAVOURITE_QUOTES_KEY] = FixedQueue(10, []);
+    storage[FAVOURITE_QUOTES_KEY] = FixedQueue(MAX_OF_FAVOURITES_QUOTES, []);
     chrome.storage.sync.set(storage);
     reloadFavourites();
 });
