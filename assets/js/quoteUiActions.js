@@ -1,8 +1,12 @@
-var BLACK_LAY_STRONG = 0.05;
+var BLACK_LAY_OPACITY = 0.1;
+var LINKS_HALF_HIDDEN_OPACITY = 0.4;
+var LINKS_SHOWN_OPACITY = 1;
+var HOVER_ON_SPEED = 150;
+var HOVER_OFF_SPEED = 300;
 
 function bindLinksAndModals() {
-    $('#lay').animate({ opacity: BLACK_LAY_STRONG });
-    $('.linksContainer').delay(1000).animate({ opacity: .8 });
+    $('#lay').animate({ opacity: BLACK_LAY_OPACITY });
+    $('.linksContainer').delay(1000).animate({ opacity: LINKS_HALF_HIDDEN_OPACITY });
 
     bindAddToFavouritesLink();
     bindFavouritesLink();
@@ -163,21 +167,21 @@ $('#clearAllDevLink').click(function () {
 $("#quoteArea").hover(function() {
     $('#lay').stop().fadeTo(200, 0.7);
 }, function() {
-    $('#lay').stop().fadeTo(500, BLACK_LAY_STRONG);
+    $('#lay').stop().fadeTo(500, BLACK_LAY_OPACITY);
 });
 
 $("#layMenu").hover(function() {
-    $(this).stop().fadeTo(200, 0.8);
-    $('.linksContainer').stop().animate({ opacity: 1 });
+    $(this).stop().fadeTo(HOVER_ON_SPEED, 0.8);
+    $('.linksContainer').stop().animate({ opacity: LINKS_SHOWN_OPACITY });
 }, function() {
-     $(this).stop().fadeTo(400, 0);
-    $('.linksContainer').stop().animate({ opacity: .7 });
+    $(this).stop().fadeTo(HOVER_OFF_SPEED, 0);
+    $('.linksContainer').stop().animate({ opacity: LINKS_HALF_HIDDEN_OPACITY });
  });
 
 $(".linksContainer").hover(function() {
-    $(this).stop().animate({ opacity: 1 });
-    $('#layMenu').stop().fadeTo(200, .8);
+    $(".linksContainer").stop().animate({ opacity: LINKS_SHOWN_OPACITY });
+    $('#layMenu').stop().fadeTo(HOVER_ON_SPEED, .8);
 }, function() {
-    $(this).stop().animate({ opacity: .8 });
-    $('#layMenu').stop().fadeTo(400, 0);
+    $(".linksContainer").stop().animate({ opacity: LINKS_HALF_HIDDEN_OPACITY });
+    $('#layMenu').stop().fadeTo(HOVER_OFF_SPEED, 0);
 });
