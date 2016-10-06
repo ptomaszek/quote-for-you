@@ -80,13 +80,17 @@ body > .modal {
 
 #layMenu {
     opacity: 0;
-    background: black;
     position: fixed;
     z-index: -0;
     width: 25vw;
     height: 100vh;
     right: 0;
     object-fit: cover;
+
+    background: black;
+    background: -webkit-linear-gradient(left, rgba(0, 0, 0, .1) 5%, rgba(0, 0, 0, 1) 10%); /*Chrome - Safari 5.1-6*/
+    background: linear-gradient(left, rgba(1, 0, 0, .4) 5%, rgba(255, 255, 255, 1)); /*Standard*/
+
 }
 
 html {
@@ -97,7 +101,7 @@ cursor: default;
     opacity: 0;
     width: 23vw;
     position: relative;
-    color: grey;
+        color: grey;
     text-align: right;
     font-size: 22px;
     right: 10px;
@@ -107,7 +111,6 @@ cursor: default;
 .linksContainer a{
     -webkit-transition: color .3s;
     -moz-transition: color .3s;
-    -o-transition: color .3s;
     transition: color .3s;
     text-shadow: 0 0 1px #black
 }
@@ -117,7 +120,7 @@ cursor: default;
 
 #topLinksContainer {
     position: absolute;
-    top: 12%;
+    top: 22%;
 }
 
 #bottomLinksContainer {

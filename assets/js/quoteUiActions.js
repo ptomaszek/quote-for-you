@@ -1,5 +1,5 @@
 function bindLinksAndModals() {
-    $('.linksContainer').delay(1000).animate({ opacity: 1 });
+    $('.linksContainer').delay(1000).animate({ opacity: .8 });
 
     bindAddToFavouritesLink();
     bindFavouritesLink();
@@ -162,15 +162,17 @@ $("#quoteArea").hover(function() {
 });
 
 $("#layMenu").hover(function() {
-    $(this).stop().fadeTo(200, 0.7);
+    $(this).stop().fadeTo(200, 0.8);
+    $('.linksContainer').stop().animate({ opacity: 1 });
 }, function() {
      $(this).stop().fadeTo(500, 0);
+    $('.linksContainer').stop().animate({ opacity: .7 });
  });
 
 $(".linksContainer").hover(function() {
-    $(this).stop().fadeTo(200, 1);
-    $('#layMenu').stop().fadeTo(200, 0.7);
+    $(this).stop().animate({ opacity: 1 });
+    $('#layMenu').stop().fadeTo(200, .8);
 }, function() {
-    $(this).stop().fadeTo(500, .9);
+    $(this).stop().animate({ opacity: .8 });
     $('#layMenu').stop().fadeTo(500, 0);
 });
