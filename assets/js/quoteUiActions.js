@@ -1,4 +1,7 @@
+var BLACK_LAY_STRONG = 0.05;
+
 function bindLinksAndModals() {
+    $('#lay').animate({ opacity: BLACK_LAY_STRONG });
     $('.linksContainer').delay(1000).animate({ opacity: .8 });
 
     bindAddToFavouritesLink();
@@ -155,10 +158,12 @@ $('#clearAllDevLink').click(function () {
     chrome.storage.sync.clear();
 });
 
+
+
 $("#quoteArea").hover(function() {
     $('#lay').stop().fadeTo(200, 0.7);
 }, function() {
-    $('#lay').stop().fadeTo(500, 0);
+    $('#lay').stop().fadeTo(500, BLACK_LAY_STRONG);
 });
 
 $("#layMenu").hover(function() {
