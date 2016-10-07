@@ -4,8 +4,8 @@
     <meta charset=UTF-8>
     <link href="https://fonts.googleapis.com/css?family=Ledger" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nixie+One&effect=putting-green" rel="stylesheet">
-    <link rel=stylesheet href=assets/css/quote.css>
     <link rel=stylesheet href=assets/css/jquery.modal.min.css>
+    <link rel=stylesheet href=assets/css/quote.css>
 
 </head>
 <body>
@@ -16,10 +16,9 @@
 <div id="layMenu">
 </div>
 <img id="backgroundImg">
-</img>
 
 <div id="content">
-    <div id="quoteArea">
+    <div id="quoteArea" class="quoteFontStyling">
         <p id="quote" class="font-effect-putting-green"></p>
         <p id="author" class="font-effect-putting-green"></p>
     </div>
@@ -27,35 +26,41 @@
     <div id="topLinksContainer" class="linksContainer">
         <p><a id="addToFavourites">Add to My Favourites</a></p>
     </div>
+
     <div id="bottomLinksContainer" class="linksContainer">
-        <div id="favouritesModal" style="display:none;">
-            <div content></div>
-            <a href="#" id="clearFavourites">Clear favourites quotes</a>
-        </div>
-        <p><a id="favouritesLink">My Favourites</a></p>
-        <div id="latestModal" style="display:none;">
-            <div content></div>
-        </div><br>
+        <p><a id="favouritesLink">My Favourites</a></p><br>
         <p><a id="latestLink">Last 3 quotes</a></p>
         <p><a id="settingsLink">Settings</a></p>
-        <div id="settingsModal" style="display:none;">
-            <label for="frequencySetting">
-                <span>How often show a new quote?</span>
-                <select id="frequencySetting">
-                    <option value="everyDay">one per day</option>
-                    <option value="everyTab">with new tab opened</option>
-                </select>
-            </label>
-            <br>
-            <label for="logSetting">
-                <span>Print debug info to <i>console</i></span><input type="checkbox" id="logSetting"/>
-            </label>
-            <p><br/><a id="resetToDefaults">TODO Reset to defaults</a></p>
-        </div>
         <p><br/><a id="clearAllDevLink">[DEV's Clear storage entirely ]</a></p>
     </div>
 </div>
 
+<!--MODALS-->
+<div id="favouritesModal" class="modalContainer" style="display:none;">
+    <div content class="quoteFontStyling"></div>
+    <a href="#" id="clearFavourites">Clear favourites quotes</a>
+</div>
+
+<div id="latestModal" class="modalContainer" style="display:none;">
+    <div content class="quoteFontStyling"></div>
+</div>
+
+<div id="settingsModal" class="modalContainer" style="display:none;">
+    <label for="frequencySetting">
+        <span>How often show a new quote?</span>
+        <select id="frequencySetting">
+            <option value="everyDay">one per day</option>
+            <option value="everyTab">with new tab opened</option>
+        </select>
+    </label>
+    <br>
+    <label for="logSetting">
+        <span>Print debug info to <i>console</i></span><input type="checkbox" id="logSetting"/>
+    </label>
+    <p><br/><a id="resetToDefaults">TODO Reset to defaults</a></p>
+</div>
+
+<!--SCRIPTS-->
 <script src=assets/ext_libs/jquery-3.1.0.min.js></script>
 <script src=assets/ext_libs/jquery-ui.1.12.0.min.js></script>
 <script src=assets/ext_libs/jquery.modal-0.8.0.min.js></script>

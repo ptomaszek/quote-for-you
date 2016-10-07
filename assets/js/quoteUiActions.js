@@ -145,7 +145,7 @@ function reloadLatest() {
 }
 
 function buildModalQuoteRow(quote) {
-    return $('<div class="modalQuoteRow"></div>')
+    return $('<div></div>')
         .attr("id", quote.quoteLink)
         .append($('<p class="modalQuoteText"></p>').text(quote.quoteText))
         .append($('<p class="modalQuoteAuthor"></p>').text(quote.quoteAuthor))
