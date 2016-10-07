@@ -94,7 +94,7 @@ body > .modal {
 }
 
 html {
-cursor: default;
+    cursor: default;
 }
 
 .linksContainer {
@@ -114,8 +114,7 @@ cursor: default;
     transition: color .2s;
 }
 .linksContainer a:hover {
-    color: white;
-    text-shadow: 1px 1px 2px #c99225;
+    color: #b4b4ea;
 }
 
 #topLinksContainer {
