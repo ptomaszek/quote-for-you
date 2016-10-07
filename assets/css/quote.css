@@ -1,3 +1,7 @@
+body {
+    margin: 0;
+}
+
 #backgroundImg {
     position: fixed;
     z-index: -1;
@@ -51,9 +55,9 @@ p {
 }
 
 /*modal*/
-
 body > .modal {
     display: none;
+    margin: px;
 }
 
 .modalQuoteRow {
