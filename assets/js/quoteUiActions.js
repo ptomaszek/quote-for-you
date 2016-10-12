@@ -100,7 +100,6 @@ function bindSettingsLink() {
     $('#settingsLink').click(function () {
         $('#settingsModal')
             .modal({
-                showClose: false,
                 fadeDuration: 150,
                 fadeDelay: 0.50
             })
