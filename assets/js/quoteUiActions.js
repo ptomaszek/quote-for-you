@@ -8,7 +8,7 @@ var MAX_OF_FAVOURITES_QUOTES = 15;
 
 function bindLinksAndModals() {
     $('#lay').animate({ opacity: BLACK_LAY_OPACITY });
-    $('.linksContainer').delay(1000).animate({ opacity: LINKS_HALF_HIDDEN_OPACITY });
+    $('.linksContainerStyle').delay(1000).animate({ opacity: LINKS_HALF_HIDDEN_OPACITY });
 
     bindAddToFavouritesLink();
     bindFavouritesLink();
@@ -51,7 +51,7 @@ function bindAddToFavouritesLink() {
 
 function bindAddToFavouritesChosenLink() {
     $('.addToFavouritesChosen').click(function () {
-        var chosenQuoteId = $(this).parent().attr('id');
+        var chosenQuoteId = $(this).parent().parent().attr('id');
 
         performForOption(LAST_QUOTES_KEY, function (lastQuotes) {
             var chosenQuote = lookup(lastQuotes, 'quoteLink', chosenQuoteId);
@@ -134,10 +134,9 @@ function reloadLatest() {
         var $latestContent = $('#latestModal div[content]');
         $latestContent.empty();
         $(lastQuotes).each(function (index, quote) {
-            $latestContent.append(
-                buildModalQuoteRow(quote)
-                    .append($(' <a href="#" class="addToFavouritesChosen">Add to favourites TODO</a>'))
-            );
+            var row =  buildModalQuoteRow(quote);
+            row.find('.leftColumn').append($(' <a class="addToFavouritesChosen links">Add to My Favourites</a>')); // TODO Already in favourites
+            $latestContent.append(row);
         });
 
         bindAddToFavouritesChosenLink();
@@ -145,11 +144,17 @@ function reloadLatest() {
 }
 
 function buildModalQuoteRow(quote) {
-    return $('<div></div>')
-        .attr("id", quote.quoteLink)
-        .append($('<p class="modalQuoteText"></p>').text(quote.quoteText))
-        .append($('<p class="modalQuoteAuthor"></p>').text(quote.quoteAuthor))
+    var leftColumn = $('<div class="leftColumn"></div>')
         .append($('<p class="modalQuoteDate"></p>').text(quote.quoteDate));
+
+    var rightColumn= $('<div class="rightColumn"></div>')
+        .append($('<p class="modalQuoteText"></p>').text(quote.quoteText))
+        .append($('<p class="modalQuoteAuthor"></p>').text(quote.quoteAuthor));
+
+    return $('<div class="modalRowParent"></div>')
+        .attr("id", quote.quoteLink)
+        .append(leftColumn)
+        .append(rightColumn);
 }
 
 $('#clearFavourites').click(function () {
@@ -174,16 +179,16 @@ $("#quoteArea").hover(function() {
 
 $("#layMenu").hover(function() {
     $(this).stop().fadeTo(HOVER_ON_SPEED, 0.8);
-    $('.linksContainer').stop().animate({ opacity: LINKS_SHOWN_OPACITY });
+    $('.linksContainerStyle').stop().animate({ opacity: LINKS_SHOWN_OPACITY });
 }, function() {
     $(this).stop().fadeTo(HOVER_OFF_SPEED, 0);
-    $('.linksContainer').stop().animate({ opacity: LINKS_HALF_HIDDEN_OPACITY });
+    $('.linksContainerStyle').stop().animate({ opacity: LINKS_HALF_HIDDEN_OPACITY });
  });
 
-$(".linksContainer").hover(function() {
-    $(".linksContainer").stop().animate({ opacity: LINKS_SHOWN_OPACITY });
+$(".linksContainerStyle").hover(function() {
+    $(".linksContainerStyle").stop().animate({ opacity: LINKS_SHOWN_OPACITY });
     $('#layMenu').stop().fadeTo(HOVER_ON_SPEED, .8);
 }, function() {
-    $(".linksContainer").stop().animate({ opacity: LINKS_HALF_HIDDEN_OPACITY });
+    $(".linksContainerStyle").stop().animate({ opacity: LINKS_HALF_HIDDEN_OPACITY });
     $('#layMenu').stop().fadeTo(HOVER_OFF_SPEED, 0);
 });
