@@ -42,8 +42,8 @@ function initStorage(callback) {
 
         function initWithDefaults(callback) {
             var defaultOptions = {};
-            defaultOptions[LOGGING_ENABLED_KEY] = true;
             defaultOptions[FRESH_QUOTE_FREQUENCY_KEY] = 'everyTab';
+            defaultOptions[LOGGING_ENABLED_KEY] = false;
 
             var defaultQuotesStorage = {};
             defaultQuotesStorage[LAST_QUOTES_KEY] = [];
