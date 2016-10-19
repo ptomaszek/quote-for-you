@@ -45,19 +45,24 @@
     <div content class="quoteFontStyling"></div>
 </div>
 
-<div id="settingsModal" class="modalContainer" style="display:none;">
-    <label for="frequencySetting">
-        <span>How often show a new quote?</span>
-        <select id="frequencySetting">
-            <option value="everyDay">one per day</option>
-            <option value="everyTab">with new tab opened</option>
-        </select>
-    </label>
-    <br>
-    <label for="logSetting">
-        <span>Print debug info to <i>console</i></span><input type="checkbox" id="logSetting"/>
-    </label>
-    <p><br/><a id="resetToDefaults">TODO Reset to defaults</a></p>
+<div id="settingsModal" class="modalContainer modalContainer500" style="display:none;">
+    <div class="modalRowParent">
+        <div class="leftSettingsColumn">Change quote</div>
+        <div class="rightSettingsColumn">
+            <select id="frequencySetting">
+                <option value="everyDay">daily</option>
+                <option value="everyTab">in every new tab</option>
+            </select>
+        </div>
+    </div>
+    <br> <br>
+    <hr/>
+    <div class="modalRowParent">
+        <div class="leftSettingsColumn">Print debug info to <i>JS console</i></div>
+        <div class="rightSettingsColumn">
+            <input type="checkbox" id="logSetting"/>
+        </div>
+    </div>
 </div>
 
 <!--SCRIPTS-->
