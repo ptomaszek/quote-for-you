@@ -3,6 +3,10 @@ body {
     font-family: 'Noto Sans', sans-serif;
 }
 
+a {
+    text-decoration:none;
+}
+
 #backgroundImg {
     position: fixed;
     z-index: -1;
@@ -60,9 +64,10 @@ p {
     opacity: 0;
     position: fixed;
     z-index: -0;
-    width: 25vw;
-    height: 100vh;
+    width: 23vw;
+    height: 25vh;
     right: 0;
+    bottom: 0;
     object-fit: cover;
     background: black;
     background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, .8) 1%); /*Chrome - Safari 5.1-6*/
@@ -94,11 +99,6 @@ html {
 }
 .links a:hover, a:hover.links {
     color: #9999ff;
-}
-
-#topLinksContainer {
-    position: absolute;
-    top: 22%;
 }
 
 #bottomLinksContainer {
@@ -177,15 +177,12 @@ body > .modal {
 
 #aboutModal p {
     padding-top: 10px;
+    color: #c1c1ff;
 }
 
 #aboutModal {
     font-family: 'Ledger', serif;
     font-size: 16px;
     color: #dcdcf5;
-}
-
-#clearFavourites {
-    padding-top: 3%;
 }
 /* MODALS END */

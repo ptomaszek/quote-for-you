@@ -4,61 +4,13 @@ var LINKS_SHOWN_OPACITY = 0.9;
 var HOVER_ON_SPEED = 150;
 var HOVER_OFF_SPEED = 300;
 
-var MAX_OF_FAVOURITES_QUOTES = 15;
-
 function bindLinksAndModals() {
     $('#lay').animate({ opacity: BLACK_LAY_OPACITY });
     $('.linksContainerStyle').delay(1000).animate({ opacity: LINKS_HALF_HIDDEN_OPACITY });
 
-    bindAddToFavouritesLink();
-    bindFavouritesLink();
     bindLatestLink();
     bindSettingsLink();
     bindAboutLink();
-}
-
-function addQuoteToFavourites(quote) {
-    performForOption(FAVOURITE_QUOTES_KEY, function (favouritesStored) {
-            var favourites = FixedQueue(MAX_OF_FAVOURITES_QUOTES, favouritesStored);
-
-            log('quote to be added to favourites:');
-            log(quote);
-
-            var favouriteQuotesLinks = favourites.map(function (quote) {// links are like IDs
-                return quote.quoteLink;
-            });
-
-            if ($.inArray(quote.quoteLink, favouriteQuotesLinks) !== -1) {
-                log('quote already in favourites');
-                return;
-            }
-
-            favourites.push(quote);
-
-            var storage = {};
-            storage[FAVOURITE_QUOTES_KEY] = favourites;
-            chrome.storage.sync.set(storage, function () {
-                log('new quote has been saved');
-            });
-        }
-    );
-}
-function bindAddToFavouritesLink() {
-    $('#addToFavourites').click(function () {
-        addQuoteToFavourites(CURRENT_QUOTE);
-    });
-}
-
-
-function bindAddToFavouritesChosenLink() {
-    $('.addToFavouritesChosen').click(function () {
-        var chosenQuoteId = $(this).parent().parent().attr('id');
-
-        performForOption(LAST_QUOTES_KEY, function (lastQuotes) {
-            var chosenQuote = lookup(lastQuotes, 'quoteLink', chosenQuoteId);
-            addQuoteToFavourites(chosenQuote);
-        })
-    });
 }
 
 function lookup(array, prop, value) {
@@ -67,20 +19,6 @@ function lookup(array, prop, value) {
             return array[i];
         }
     }
-}
-
-function bindFavouritesLink() {
-    $('#favouritesLink').click(function () {
-        $('#favouritesModal')
-            .modal({
-                fadeDuration: 150,
-                fadeDelay: 0.50
-            })
-            .on($.modal.OPEN, function () {
-                reloadFavourites();
-            });
-        return false;
-    });
 }
 
 function bindLatestLink() {
@@ -125,20 +63,6 @@ function bindAboutLink() {
     });
 }
 
-
-
-function reloadFavourites() {
-    chrome.storage.sync.get(FAVOURITE_QUOTES_KEY, function (data) {
-        var favourites = data[FAVOURITE_QUOTES_KEY];
-
-        var $favouritesContent = $('#favouritesModal div[content]');
-        $favouritesContent.empty();
-        $(favourites).each(function (index, quote) {
-            $favouritesContent.append(buildModalQuoteRow(quote));
-        });
-    });
-}
-
 function reloadLatest() {
     chrome.storage.sync.get(LAST_QUOTES_KEY, function (data) {
         var lastQuotes = data[LAST_QUOTES_KEY];
@@ -146,12 +70,8 @@ function reloadLatest() {
         var $latestContent = $('#latestModal div[content]');
         $latestContent.empty();
         $(lastQuotes).each(function (index, quote) {
-            var row =  buildModalQuoteRow(quote);
-            row.find('.leftColumn').append($(' <a class="addToFavouritesChosen links">Add to My Favourites</a>')); // TODO Already in favourites
-            $latestContent.append(row);
+            $latestContent.append(buildModalQuoteRow(quote));
         });
-
-        bindAddToFavouritesChosenLink();
     });
 }
 
@@ -168,20 +88,6 @@ function buildModalQuoteRow(quote) {
         .append(leftColumn)
         .append(rightColumn);
 }
-
-$('#clearFavourites').click(function () {
-    var storage = {};
-    storage[FAVOURITE_QUOTES_KEY] = FixedQueue(MAX_OF_FAVOURITES_QUOTES, []);
-    chrome.storage.sync.set(storage);
-    reloadFavourites();
-});
-
-//todo remove or move to settings as 'Clear all the settings, last quotes, favourites and so on'
-$('#clearAllDevLink').click(function () {
-    chrome.storage.sync.clear();
-});
-
-
 
 $("#quoteArea").hover(function() {
     $('#lay').stop().fadeTo(200, 0.7);

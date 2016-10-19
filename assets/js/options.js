@@ -30,7 +30,6 @@ function performForOption(optionKey, callback) {
 
 //quotes storage (not options)
 var LAST_QUOTES_KEY = 'latestQuotes';
-var FAVOURITE_QUOTES_KEY = 'favouritesQuotes';
 
 // init storage with defaults
 function initStorage(callback) {
@@ -48,7 +47,6 @@ function initStorage(callback) {
 
             var defaultQuotesStorage = {};
             defaultQuotesStorage[LAST_QUOTES_KEY] = [];
-            defaultQuotesStorage[FAVOURITE_QUOTES_KEY] = [];
 
             chrome.storage.sync.get(
                 $.extend({}, defaultOptions, defaultQuotesStorage, {initialized: true})
