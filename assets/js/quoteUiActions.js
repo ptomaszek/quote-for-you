@@ -14,6 +14,7 @@ function bindLinksAndModals() {
     bindFavouritesLink();
     bindLatestLink();
     bindSettingsLink();
+    bindAboutLink();
 }
 
 function addQuoteToFavourites(quote) {
@@ -112,6 +113,18 @@ function bindSettingsLink() {
         return false;
     });
 }
+
+function bindAboutLink() {
+    $('#aboutLink').click(function () {
+         $('#aboutModal')
+             .modal({
+                 fadeDuration: 150,
+                 fadeDelay: 0.50
+             })
+        return false;
+    });
+}
+
 
 
 function reloadFavourites() {

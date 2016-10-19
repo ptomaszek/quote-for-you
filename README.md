@@ -1,5 +1,4 @@
 TODO:
- - About link - popup referencing forismatic.com
  - fonts locally
  - background images as an option
  - remove Favourites and put some bloody quality into the code, you lazy bastard!
