@@ -93,8 +93,8 @@ function getBackupQuote() {
     //todo fetch from local store
     //todo check not shown recently
     return {
-        quoteText: 'If there\'s no Internet, there are no quotes and no cats. So just relax.',
-        quoteAuthor: "Anonymous",
+        quoteText: 'If there\'s no Internet, there are no quotes and no cats. So just relax. [Looks there\'s no internet connection :/]',
+        quoteAuthor: "The Extension",
         quoteLink: 'getBackupQuote'
     };
 }
